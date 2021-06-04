@@ -1,16 +1,19 @@
 #!/usr/bin/python3
-import time
-class MainPage(BasePage):
+from selenium.common.exceptions import NoSuchElementException
+from pages.main_page import MainPage
+def test_guest_can_go_to_login_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/"
+    page = MainPage(browser, link) 
+    page.open()
+    page.go_to_login_page()
 
-link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+def test_guest_should_see_login_link(browser):
+    link = "http://selenium1py.pythonanywhere.com/"
+    page = MainPage(browser, link)
+    page.open()
+    page.should_be_login_link()
 
-
-def test_guest_should_see_basket_button(browser):
-    browser.get(link)
-
-    #time.sleep(30)  # for your comfort :P
-
-    basket_button = browser.find_elements_by_css_selector("button[type='submit'].btn-add-to-basket")
-    assert basket_button, "Error: basket button does not exist"
+def should_be_login_link(self):
+    assert self.is_element_present(By.CSS_SELECTOR, "#login_link_invalid"), "Login link is not presented"
 
 
